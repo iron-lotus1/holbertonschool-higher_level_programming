@@ -164,7 +164,3 @@ console.log(sum);
 ```
 </details>
 
----
-
-## 🔜 Next Up
-After warming up with JavaScript syntax and control flow, the next step in this repository is diving into **`javascript_objects_scopes_closures`** to explore prototypes, classes, `this`, and lexical scoping!
