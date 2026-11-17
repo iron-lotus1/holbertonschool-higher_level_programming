@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-"""displays all values in the states table where name matches the argument."""
+"""Safely displays states matching a name in a MySQL database."""
 
 import MySQLdb
 import sys
 
-if __name__ == "__main__":
+
+def main():
+    """Connects to MySQL and displays matching states."""
     db = MySQLdb.connect(
         host="localhost",
         port=3306,
@@ -13,19 +15,21 @@ if __name__ == "__main__":
         db=sys.argv[3]
     )
 
-    cur = db.cursor()
+    cursor = db.cursor()
 
-    query = (
-    "SELECT * FROM states WHERE name = '{}' "
-    "ORDER BY id ASC"
-).format(sys.argv[4])
+    cursor.execute(
+        "SELECT * FROM states WHERE name = %s ORDER BY id ASC",
+        (sys.argv[4],)
+    )
 
-    cur.execute(query)
-
-    rows = cur.fetchall()
+    rows = cursor.fetchall()
 
     for row in rows:
         print(row)
 
-    cur.close()
+    cursor.close()
     db.close()
+
+
+if __name__ == "__main__":
+    main()
