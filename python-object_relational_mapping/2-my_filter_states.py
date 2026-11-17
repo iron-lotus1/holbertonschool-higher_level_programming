@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-
 """Lists states matching a name provided by the user."""
 
 import MySQLdb
 import sys
+
 
 if __name__ == "__main__":
     db = MySQLdb.connect(
