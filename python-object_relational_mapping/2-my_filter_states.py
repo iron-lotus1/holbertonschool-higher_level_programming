@@ -1,18 +1,24 @@
 #!/usr/bin/python3
 """Displays states matching a name provided by the user."""
+
 import MySQLdb
-import sys
+from sys import argv
 
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(
-        host="localhost", port=3306,
-        user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3]
-    )
+def filter_states(username, password, database, state):
+    """Function to filter States"""
+    db = MySQLdb.connect(host='localhost', port=3306,
+                         user=username, passwd=password, db=database)
     cur = db.cursor()
-    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC"
-    cur.execute(query.format(sys.argv[4]))
-    for row in cur.fetchall():
+    cur.execute(
+        "SELECT * FROM states WHERE name LIKE BINARY "
+        "'{}' ORDER BY id ASC".format(state))
+    rows = cur.fetchall()
+    for row in rows:
         print(row)
     cur.close()
     db.close()
+
+
+if __name__ == "__main__":
+    filter_states(argv[1], argv[2], argv[3], argv[4])
