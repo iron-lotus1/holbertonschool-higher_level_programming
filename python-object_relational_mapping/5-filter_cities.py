@@ -1,51 +1,40 @@
 #!/usr/bin/python3
-import MySQLdb
-import sys
-
+"""Lists all cities with their states"""
 
 import MySQLdb
-import sys
+from sys import argv
 
 
-def filter_cities_by_state():
-    """
-    Connects to MySQL database and prints all cities
-    of a given state separated by commas.
-    """
-    if len(sys.argv) != 5:
-        return
-
-    username = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
-    state_name = sys.argv[4]
-
+def list_cities(username, password, database, state):
     db = MySQLdb.connect(
-        host="localhost",
+        host="127.0.0.1",
         port=3306,
         user=username,
         passwd=password,
-        db=db_name,
-        charset="utf8"
+        db=database
     )
 
     cursor = db.cursor()
-    query = (
-        "SELECT cities.name "
-        "FROM cities JOIN states ON cities.state_id = states.id "
-        "WHERE states.name = %s "
-        "ORDER BY cities.id ASC"
-    )
-    cursor.execute(query, (state_name,))
+
+    cursor.execute(
+        "SELECT name FROM cities "
+        "WHERE state_id like "
+        "(SELECT id FROM states WHERE name = %s)"
+        " ORDER BY cities.id ASC;",
+        (state,))
 
     rows = cursor.fetchall()
-    # Extract city names and join them with ', '
-    cities_list = [row[0] for row in rows]
-    print(", ".join(cities_list))
+
+    res = ""
+
+    for row in rows:
+        res += f"{row[0]}, "
+
+    print(res[:-2])
 
     cursor.close()
     db.close()
 
 
 if __name__ == "__main__":
-    filter_cities_by_state()
+    list_cities(argv[1], argv[2], argv[3], argv[4])
