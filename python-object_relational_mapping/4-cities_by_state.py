@@ -1,15 +1,12 @@
-
 #!/usr/bin/python3
 """Lists all cities with their corresponding states."""
 
 import MySQLdb
 import sys
 
+
 def list_cities_by_state():
-    """
-    Connects to MySQL database and prints all cities
-    with their states ordered by cities.id.
-    """
+    """Connects to MySQL database"""
     if len(sys.argv) != 4:
         return
 
