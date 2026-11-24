@@ -13,7 +13,7 @@ def items():
 
     items = data.get('items', [])
 
-    return render_template('items.html', items=data)
+    return render_template('items.html', items=items)
 
 
 if __name__ == '__main__':
