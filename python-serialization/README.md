@@ -711,7 +711,7 @@ Important: The age is now a string. Your XML deserialization function retrieves 
 ## 6. Comparing the Four Approaches
 
 |Method |Main purpose                       |Common file extension  |
-|---    |---|---                            |---                    |
+|---    |---                                |---                    |
 |JSON   |Save and load structured data      |.json                  |
 |Pickle |Save and load Python objects       |.pkl                   |
 |CSV    |Store tabular data                 |.csv                   |
